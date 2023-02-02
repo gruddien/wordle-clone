@@ -6,6 +6,8 @@ let currentGuess = [];
 let nextLetter = 0;
 
 let correctAnswer = WORDS[Math.floor(Math.random() * WORDS.length)]
+let correctArray = Array.from(correctAnswer);
+let correctArrayDuplicatesMap = new Map();
 console.log(correctAnswer)
 
 const fKeys = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]; //nie umiałem regexem wywalić F-keys
@@ -28,6 +30,15 @@ function initBoard() { //wygeneruj plansze
 };
 
 initBoard(); //odpala generowanie planszy na starcie gry
+
+function countDuplicates(array){ //tworzy mapę zduplikowanych liter
+    array.forEach(element => {
+        correctArrayDuplicatesMap.set(element, array.filter(e => e === element).length)
+    });
+    console.log(correctArrayDuplicatesMap);
+}
+
+countDuplicates(correctArray);
 
 document.addEventListener("keydown", (e) =>{
     if (guessesRemaining === 0){
@@ -85,18 +96,14 @@ function checkGuess(){
     }
 
     let checkedRow = document.getElementsByClassName("letterRow")[NUMBER_OF_GUESSES - guessesRemaining];
-    let correctArray = Array.from(correctAnswer);
 
     for (let i = 0; i < currentGuess.length; i++) {
         let letter = currentGuess[i];
         let box = checkedRow.children[i];
         let color = "";
-        let numberOfDuplcates = correctArray.filter(l => l === letter).length;
-        console.log(numberOfDuplcates);
 
         if (letter === correctArray[i]){
             color = "#3c8233"; //green
-
         } else if (correctArray.includes(letter)){
             color = "#cc9d1d"; //yellow
         } else {
