@@ -1,4 +1,4 @@
-import { WORDS } from "./words.js" //list słów, trzeba odpalać na localhoscie
+import { WORDS } from "./words.js" //world list, server needed
 
 const NUMBER_OF_GUESSES = 6;
 let guessesRemaining = NUMBER_OF_GUESSES;
@@ -8,14 +8,14 @@ let nextLetter = 0;
 let correctAnswer = WORDS[Math.floor(Math.random() * WORDS.length)]
 console.log(correctAnswer)
 
-const fKeys = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]; //nie umiałem regexem wywalić F-keys
+const fKeys = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]; //ignore F-keys
 
 //colors
 let grey = '#363636';
 let green = '#3c8233';
 let yellow = '#cc9d1d';
 
-function initBoard() { //wygeneruj plansze
+function initBoard() { //generate board function
     let board = document.getElementById("gameBoard");
 
     for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
@@ -31,7 +31,7 @@ function initBoard() { //wygeneruj plansze
     };
 };
 
-initBoard(); //odpala generowanie planszy na starcie gry
+initBoard(); //generate board
 
 document.addEventListener("keydown", (e) =>{
     if (guessesRemaining === 0){
@@ -49,9 +49,9 @@ document.addEventListener("keydown", (e) =>{
         checkGuess();
         return
     }
-    let validKey = pressedKey.match(/[A-Z]/gi); //regex sprawdza tylko litery
+    let validKey = pressedKey.match(/[A-Z]/gi); //get only letters with regex
     if (validKey && validKey.length === 1) {
-        if (!fKeys.includes(pressedKey)){ //jeśli nie jest F-key to odpal insterLetter
+        if (!fKeys.includes(pressedKey)){ //if not Fkey then insterLetter
             insertLetter(pressedKey);
         }
     }
@@ -63,9 +63,16 @@ function insertLetter(letter){
     }
     let targetRow = document.getElementsByClassName("letterRow")[NUMBER_OF_GUESSES - guessesRemaining];
     let targetBox = targetRow.children[nextLetter];
+    targetBox.style.animation = "pop .1s"; //letter pop animation when typing
     targetBox.innerText = letter;
     nextLetter++;
     currentGuess.push(letter);
+    
+    //reset animations of letterBox
+    targetBox.addEventListener('animationend', () => {
+        targetBox.style.animation = "";
+    });
+    
 }
 
 function deleteLetter(){
@@ -111,6 +118,7 @@ function checkGuess(){
         
     }
 
+    //flipping letters and adding colors
     colorTable.forEach((e, i) => {
         let checkedBox = checkedRow.children[i];
         let time = 200*i;

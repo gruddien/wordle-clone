@@ -67,3 +67,7 @@ body {
     max-width: 500px;
     margin: 0 auto 8px;
 }
+
+@keyframes pop{
+    50%  {transform: scale(1.1);}
+  }
