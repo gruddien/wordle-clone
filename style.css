@@ -25,6 +25,9 @@ body {
     justify-content: center;
     align-items: center;
     text-transform: uppercase;
+    perspective: 1000px;
+    transition: transform 0.4s;
+    transform-style: preserve-3d;
 }
 
 .filledBox {

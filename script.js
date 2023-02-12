@@ -112,7 +112,15 @@ function checkGuess(){
     }
 
     colorTable.forEach((e, i) => {
-        checkedRow.children[i].style.backgroundColor = e;
+        let checkedBox = checkedRow.children[i];
+        let time = 200*i;
+        setTimeout(()=>{
+            checkedBox.style.transform = "rotateX(90deg)"
+        },time);
+        checkedBox.addEventListener('transitionend', () => {
+            checkedBox.style.backgroundColor = e;
+            checkedBox.style.transform = "rotateX(0)"
+        });
     });
 
     guessesRemaining--;
