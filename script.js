@@ -164,6 +164,8 @@ function checkGuess(){
 
         if (keyboardColorMap.get(checkedBox.innerHTML) == green){
             return
+        } else if (keyboardColorMap.get(checkedBox.innerHTML) == yellow && e !== green){
+            return
         } else {
             keyboardColorMap.set(checkedBox.innerHTML, e);
         }
