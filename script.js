@@ -117,14 +117,19 @@ function checkGuess(){
         return
     }
 
+    let checkedRow = document.getElementsByClassName("letterRow")[NUMBER_OF_GUESSES - guessesRemaining];
+
     let guessString = currentGuess.join('');
     if (!WORDS.includes(guessString)) {
+        checkedRow.style.animation = "wobble .2s";
+        checkedRow.addEventListener('animationend', () => {
+            checkedRow.style.animation = "";
+        });
         alert("Word not on the list!")
         return
     }
 
     let correctArray = Array.from(correctAnswer);
-    let checkedRow = document.getElementsByClassName("letterRow")[NUMBER_OF_GUESSES - guessesRemaining];
     let colorTable = [grey, grey, grey, grey, grey];
 
     for (let i = 0; i < correctAnswer.length; i++) {
@@ -148,7 +153,7 @@ function checkGuess(){
     }
 
     //flipping letters and adding colors
-    colorTable.forEach((e, i) => {
+    colorTable.forEach((color, i) => {
         let checkedBox = checkedRow.children[i];
         let time = 200*i;
 
@@ -157,21 +162,23 @@ function checkGuess(){
         },time);
 
         checkedBox.addEventListener('transitionend', () => {
-            checkedBox.style.backgroundColor = e;
+            checkedBox.style.backgroundColor = color;
             checkedBox.style.border = "2px solid transparent";
             checkedBox.style.transform = "rotateX(0)"
         });
 
         if (keyboardColorMap.get(checkedBox.innerHTML) == green){
             return
-        } else if (keyboardColorMap.get(checkedBox.innerHTML) == yellow && e !== green){
+        } else if (keyboardColorMap.get(checkedBox.innerHTML) == yellow && color !== green){
             return
         } else {
-            keyboardColorMap.set(checkedBox.innerHTML, e);
+            keyboardColorMap.set(checkedBox.innerHTML, color);
         }
 
         checkedRow.children[colorTable.length - 1].addEventListener('transitionend', () => {
-            colorKeyboard(checkedBox.innerHTML, e)
+            setTimeout(() => {
+                colorKeyboard(checkedBox.innerHTML, color)
+            }, 200)
         });
     });
 
