@@ -81,12 +81,11 @@ function checkGuess(){
         return
     }
 
-        /*
     let guessString = currentGuess.join('');
     if (!WORDS.includes(guessString)) {
         alert("Word not on the list!")
         return
-    }*/
+    }
 
     let correctArray = Array.from(correctAnswer);
     let checkedRow = document.getElementsByClassName("letterRow")[NUMBER_OF_GUESSES - guessesRemaining];
