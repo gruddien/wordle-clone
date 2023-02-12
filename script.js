@@ -6,12 +6,14 @@ let currentGuess = [];
 let nextLetter = 0;
 
 let correctAnswer = WORDS[Math.floor(Math.random() * WORDS.length)]
-let correctArray = Array.from(correctAnswer);
-let correctArrayDuplicatesMap = new Map();
 console.log(correctAnswer)
 
 const fKeys = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]; //nie umiałem regexem wywalić F-keys
 
+//colors
+let grey = '#363636';
+let green = '#3c8233';
+let yellow = '#cc9d1d';
 
 function initBoard() { //wygeneruj plansze
     let board = document.getElementById("gameBoard");
@@ -22,7 +24,7 @@ function initBoard() { //wygeneruj plansze
 
         for (let j = 0; j < 5; j++) {
             let box = document.createElement("div");
-            box.className = "letterBox"
+            box.className = "letterBox";
             row.appendChild(box);
         };
         board.appendChild(row);
@@ -30,15 +32,6 @@ function initBoard() { //wygeneruj plansze
 };
 
 initBoard(); //odpala generowanie planszy na starcie gry
-
-function countDuplicates(array){ //tworzy mapę zduplikowanych liter
-    array.forEach(element => {
-        correctArrayDuplicatesMap.set(element, array.filter(e => e === element).length)
-    });
-    console.log(correctArrayDuplicatesMap);
-}
-
-countDuplicates(correctArray);
 
 document.addEventListener("keydown", (e) =>{
     if (guessesRemaining === 0){
@@ -88,39 +81,43 @@ function checkGuess(){
         return
     }
 
+        /*
     let guessString = currentGuess.join('');
-
     if (!WORDS.includes(guessString)) {
         alert("Word not on the list!")
         return
-    }
+    }*/
 
+    let correctArray = Array.from(correctAnswer);
     let checkedRow = document.getElementsByClassName("letterRow")[NUMBER_OF_GUESSES - guessesRemaining];
+    let colorTable = [grey, grey, grey, grey, grey];
 
-    for (let i = 0; i < currentGuess.length; i++) {
-        let letter = currentGuess[i];
-        let box = checkedRow.children[i];
-        let color = "";
+    for (let i = 0; i < correctAnswer.length; i++) {
+        if(correctArray[i] == currentGuess[i]){
+            colorTable[i] = green;
+            correctArray[i] = "#";
+        }; 
+    };
 
-        if (letter === correctArray[i]){
-            color = "#3c8233"; //green
-        } else if (correctArray.includes(letter)){
-            color = "#cc9d1d"; //yellow
-        } else {
-            color = "#363636"; //grey
-        }
+    for (let i = 0; i < correctArray.length; i++) {
+        if (colorTable[i] == green) continue;
 
-    box.style.backgroundColor = color;
-
+        for (let j = 0; j < correctArray.length; j++) {
+            if (correctArray[j] == currentGuess[i]){
+                colorTable[i] = yellow;
+                correctArray[j] = "#";
+                break;
+            };
+        };
         
     }
+
+    colorTable.forEach((e, i) => {
+        checkedRow.children[i].style.backgroundColor = e;
+    });
+
     guessesRemaining--;
     nextLetter = 0;
-    console.log(currentGuess);
     currentGuess = [];
 
-}
-
-function colorKeyboard(letter){
-    
 }
