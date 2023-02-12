@@ -4,11 +4,11 @@ const NUMBER_OF_GUESSES = 6;
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
 let nextLetter = 0;
-
 let correctAnswer = WORDS[Math.floor(Math.random() * WORDS.length)]
-console.log(correctAnswer)
-
 const fKeys = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]; //ignore F-keys
+const onScreenKey = document.getElementsByClassName("keyboardButton");
+
+console.log(correctAnswer)
 
 //colors
 let grey = '#363636';
@@ -56,6 +56,32 @@ document.addEventListener("keydown", (e) =>{
         }
     }
 })
+
+//onscreen keyboard input
+Array.from(onScreenKey).forEach(key => {
+    key.addEventListener("click", () =>{
+        if (guessesRemaining === 0){
+            return
+        };
+
+        let keyLetter = key.innerHTML;
+
+        if (keyLetter === "Del" && nextLetter !== 0){
+            deleteLetter();
+            return
+        }
+
+        if (keyLetter === "Enter"){
+            checkGuess();
+            return
+        }
+
+        let validKey = keyLetter.match(/[A-Z]/gi); //get only letters with regex
+        if (validKey && validKey.length === 1) {
+            insertLetter(keyLetter);
+        }
+    })
+});
 
 function insertLetter(letter){
     if (nextLetter === 5){
