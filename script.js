@@ -7,6 +7,7 @@ let nextLetter = 0;
 let correctAnswer = WORDS[Math.floor(Math.random() * WORDS.length)]
 const fKeys = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]; //ignore F-keys
 const screenKeyboard = Array.from(document.getElementsByClassName("keyboardButton"));
+let keyboardColorMap = new Map();
 
 console.log(correctAnswer)
 
@@ -161,12 +162,23 @@ function checkGuess(){
             checkedBox.style.transform = "rotateX(0)"
         });
 
-        if (colorTable.length === (i + 1) && (checkedBox.ontransitionend = () => {return})){
-            colorKeyboard();
+        if (keyboardColorMap.get(checkedBox.innerHTML) == green){
+            return
+        } else {
+            keyboardColorMap.set(checkedBox.innerHTML, e);
         }
+
+        checkedRow.children[colorTable.length - 1].addEventListener('transitionend', () => {
+            colorKeyboard(checkedBox.innerHTML, e)
+        });
     });
 
-    function colorKeyboard(){
+    function colorKeyboard(letter, color){
+        screenKeyboard.forEach(key => {
+            if (key.innerHTML === letter){
+                key.style.backgroundColor = color;  
+            }
+        });
     };
 
     guessesRemaining--;
