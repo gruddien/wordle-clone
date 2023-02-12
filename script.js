@@ -68,17 +68,19 @@ Array.from(onScreenKey).forEach(key => {
 
         if (keyLetter === "Del" && nextLetter !== 0){
             deleteLetter();
+            key.blur();
             return
         }
 
         if (keyLetter === "Enter"){
             checkGuess();
+            key.blur();
             return
         }
 
-        let validKey = keyLetter.match(/[A-Z]/gi); //get only letters with regex
-        if (validKey && validKey.length === 1) {
+        if (keyLetter && keyLetter.length === 1) {
             insertLetter(keyLetter);
+            key.blur();
         }
     })
 });
