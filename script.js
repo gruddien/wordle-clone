@@ -6,7 +6,7 @@ let currentGuess = [];
 let nextLetter = 0;
 let correctAnswer = WORDS[Math.floor(Math.random() * WORDS.length)]
 const fKeys = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]; //ignore F-keys
-const onScreenKey = document.getElementsByClassName("keyboardButton");
+const screenKeyboard = Array.from(document.getElementsByClassName("keyboardButton"));
 
 console.log(correctAnswer)
 
@@ -58,7 +58,7 @@ document.addEventListener("keydown", (e) =>{
 })
 
 //onscreen keyboard input
-Array.from(onScreenKey).forEach(key => {
+screenKeyboard.forEach(key => {
     key.addEventListener("click", () =>{
         if (guessesRemaining === 0){
             return
@@ -150,15 +150,24 @@ function checkGuess(){
     colorTable.forEach((e, i) => {
         let checkedBox = checkedRow.children[i];
         let time = 200*i;
+
         setTimeout(()=>{
             checkedBox.style.transform = "rotateX(90deg)"
         },time);
+
         checkedBox.addEventListener('transitionend', () => {
             checkedBox.style.backgroundColor = e;
             checkedBox.style.border = "2px solid transparent";
             checkedBox.style.transform = "rotateX(0)"
         });
+
+        if (colorTable.length === (i + 1) && (checkedBox.ontransitionend = () => {return})){
+            colorKeyboard();
+        }
     });
+
+    function colorKeyboard(){
+    };
 
     guessesRemaining--;
     nextLetter = 0;
