@@ -127,6 +127,7 @@ function checkGuess(){
         },time);
         checkedBox.addEventListener('transitionend', () => {
             checkedBox.style.backgroundColor = e;
+            checkedBox.style.border = "2px solid transparent";
             checkedBox.style.transform = "rotateX(0)"
         });
     });

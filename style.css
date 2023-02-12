@@ -17,7 +17,7 @@ body {
 .letterBox {
     border: 2px solid rgb(74, 74, 74);
     margin: 2px;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     height: 3rem;
     width: 3rem;
@@ -28,10 +28,6 @@ body {
     perspective: 1000px;
     transition: transform 0.4s;
     transform-style: preserve-3d;
-}
-
-.filledBox {
-    border: 2px solid black;
 }
   
 .letterRow {
