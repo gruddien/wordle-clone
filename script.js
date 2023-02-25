@@ -125,7 +125,7 @@ function checkGuess(){
         checkedRow.addEventListener('animationend', () => {
             checkedRow.style.animation = "";
         });
-        alert("Word not on the list!")
+        displayPopup("Not in word list");
         return
     }
 
@@ -193,5 +193,16 @@ function checkGuess(){
     guessesRemaining--;
     nextLetter = 0;
     currentGuess = [];
+}
 
+function displayPopup(popupText){
+    let popupContainer = document.getElementById("popupContainer");
+    let popupBox = document.createElement("div");
+    popupBox.className = "popupBox";
+    popupBox.innerText = popupText;
+    popupContainer.appendChild(popupBox);
+
+    setTimeout(()=>{
+        popupContainer.removeChild(popupContainer.lastChild);
+    },1300)
 }

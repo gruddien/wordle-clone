@@ -65,6 +65,33 @@ body {
     margin: 0 auto 8px;
 }
 
+#popupContainer {
+    display:flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+}
+
+.popupBox {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    color: #000000;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 8px;
+    opacity: 1;
+    animation: fadeOut .3s forwards 1s;
+}
+
 @keyframes pop{
     50%  {
         transform: scale(1.1);
@@ -87,4 +114,11 @@ body {
     100% {
         margin-left: 0px;
     }
+  }
+
+  @keyframes fadeOut {
+    100% {
+        opacity: 0;
+    }
+    
   }
